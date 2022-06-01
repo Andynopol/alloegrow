@@ -1,0 +1,11 @@
+# EVENT_BUS API TEST
+
+# DISPATCH EVENT
+POST http://localhost:3300/events/dispatch HTTP/1.1
+content-type: application/json
+
+{
+    "type":"test",
+    "payload":"test",
+    "correlationId":"test"
+}

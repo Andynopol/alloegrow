@@ -6,6 +6,7 @@ const userSchema: mongoose.Schema = new mongoose.Schema( {
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     password: { type: String, required: false },
+    planifications: { type: Array, required: true, default: [] }
 } );
 
 const Model = mongoose.model<UserData>( "user", userSchema, "usr" );

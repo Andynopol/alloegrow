@@ -4,5 +4,5 @@ export interface UserData extends Document {
     firstName: string,
     lastName: string;
     password: string;
-    planifications?: Array<Date>;
+    planifications?: Array<string>;
 }
