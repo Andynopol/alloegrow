@@ -1,30 +1,34 @@
 # USER_SRV API TEST
 
-# LOGIN
-POST http://localhost:3100/usr/login HTTP/1.1
+# CREATE PLANIFICATION
+POST http://localhost:3200/events/listeners HTTP/1.1
 content-type: application/json
 
 {
-    "email":"andrei.nechita95@gmail.com",
-    "password":"1234"
+    "type":"planification.create",
+    "payload":{"ref":"asdasd", "data":{
+        "start": "1654201399212",
+        "end": "1654201424990",
+        "count":3,
+        "date": "1654199829960",
+        "plan":["9:04", "10:15", "20:02"],
+        "name":"test"
+        
+    }},
+    "correlationId": "asdaasdfgh",
+    "origin": "test"
 }
 
 ###
 
-# REGISTER
-POST http://localhost:3100/usr/register HTTP/1.1
+
+# DELETE PLANIFICATION
+POST http://localhost:3200/events/listeners HTTP/1.1
 content-type: application/json
 
-{   
-    "firstName": "Dinu-Andrei",
-    "lastName": "Nechita",
-    "email":"andrei.nechitaw95@gmail.com",
-    "password":"1234",
-    "confirmedPassword":"1234"
+{
+    "type":"planification.delete",
+    "payload":{"ref":"asdasd", "_id":"62991b57a328ce06a7bb8659"},
+    "correlationId": "asdaasdfgh",
+    "origin": "test"
 }
-
-###
-
-# DELETE USER
-DELETE http://localhost:3100/usr/delete/6294023007cf2e4bf9aa0cbe HTTP/1.1
-content-type: application/json
