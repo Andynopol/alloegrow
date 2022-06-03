@@ -38,7 +38,7 @@ export const registerUser = async ( req: Request, res: Response ) => {
     try {
         if ( !firstName || !lastName || !email || !password || !confirmedPassword ) return res.status( 400 ).json( new JSONResponse( Status.NOTOK, 'Some fields', StatusMessage.invalid ).build() ).end();
 
-        if ( password !== confirmedPassword ) return res.status( 400 ).json( new JSONResponse( Status.NOTOK, 'Passowrds', StatusMessage.missmatch ).build() ).end();
+        if ( password !== confirmedPassword ) return res.status( 401 ).json( new JSONResponse( Status.NOTOK, 'Passowrds', StatusMessage.missmatch ).build() ).end();
 
         const existingUser = await UserModel.findOne( { email } );
 
@@ -75,7 +75,7 @@ export const deleteUser = async ( req: Request, res: Response ) => {
 
         if ( !userDeleted ) throw new Error( "Database connection issue!" );
 
-        res.status( 200 ).json( new JSONResponse( Status.OK, "User deleted", StatusMessage.success ) ).end();
+        res.status( 200 ).json( new JSONResponse( Status.OK, "User deleted", StatusMessage.success ).build() ).end();
     } catch ( err ) {
         res.status( 500 ).json( new JSONResponse( Status.NOTOK, '', StatusMessage.unknowun, ( err as Error ).message ).build() );
     }

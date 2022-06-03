@@ -6,7 +6,7 @@ import eventsRouter from './router/eventsRouter.js';
 
 config();
 const app = express();
-const PORT = process.env.PORT || 3200;
+const PORT = process.env.PORT || 3300;
 
 app.use( express.json( { limit: '1mb' } ) );
 app.use( urlencoded( { limit: '30mb', extended: true } ) );

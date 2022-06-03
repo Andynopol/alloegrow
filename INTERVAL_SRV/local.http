@@ -1,4 +1,4 @@
-# USER_SRV API TEST
+# INTERVAL_SRV API TEST
 
 # CREATE PLANIFICATION
 POST http://localhost:3200/events/listeners HTTP/1.1

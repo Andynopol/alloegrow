@@ -22,9 +22,6 @@ export const listen = async ( req: Request, res: Response ) => {
                 await deletePlanification( payload );
                 break;
         }
-
-
-
         res.status( 200 ).json( new JSONResponse( Status.OK, "Event handled", StatusMessage.success ).build() );
 
     } catch ( err ) {

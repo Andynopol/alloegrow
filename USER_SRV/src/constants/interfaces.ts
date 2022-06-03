@@ -6,3 +6,16 @@ export interface UserData extends Document {
     password: string;
     planifications?: Array<string>;
 }
+
+export interface UserCredientials {
+    email: string,
+    firstName?: string,
+    lastName?: string,
+    password?: string,
+    confirmedPassword?: string;
+}
+
+export interface HandlerResult {
+    status: number;
+    response: any;
+}
