@@ -4,7 +4,7 @@ export interface UserData extends Document {
     firstName: string,
     lastName: string;
     password: string;
-    planifications?: Array<string>;
+    planification?: Array<string>;
 }
 
 export interface UserCredientials {

@@ -7,11 +7,10 @@ content-type: application/json
 {
     "type":"planification.create",
     "payload":{"ref":"asdasd", "data":{
-        "start": "1654201399212",
-        "end": "1654201424990",
-        "count":3,
-        "date": "1654199829960",
-        "plan":["9:04", "10:15", "20:02"],
+        "start": 1654322400000,
+        "end": 1654354800000,
+        "count":50,
+        "date": 1654322400000,
         "name":"test"
         
     }},

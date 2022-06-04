@@ -25,6 +25,8 @@ export const listen = async ( req: Request, res: Response ) => {
             case type.includes( "user" ) && type.includes( "delete" ):
                 result = await deleteUser( payload );
                 break;
+            default:
+                return res.status( 404 ).json( new JSONResponse( Status.NOTOK, 'Handler', StatusMessage.notFound ).build() ).end();
         }
 
         res.status( result.status ).json( result.response );

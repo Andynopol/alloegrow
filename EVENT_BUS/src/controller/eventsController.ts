@@ -14,16 +14,17 @@ export const dispatchEvent = async ( req: Request, res: Response ) => {
 
         if ( existingEventLog ) return res.status( 403 ).json( new JSONResponse( Status.NOTOK, 'Event', StatusMessage.duplicate ).build() ).end();
 
-        process.env.SERVICES.split( "," ).forEach( service => {
+        process.env.SERVICES.split( "," ).forEach( async ( service ) => {
             try {
-                fetch( `${ process.env.URI_SCHEMA }://${ service }/events/listeners`, { headers: HEADERS, method: "POST", body: JSON.stringify( { type, payload, correlationId, origin } ) } );
+                const response = await ( await fetch( `${ process.env.URI_SCHEMA }://${ service }/events/listeners`, { headers: HEADERS, method: "POST", body: JSON.stringify( { type, payload, correlationId, origin } ) } ) ).json();
+                if ( ( response as any ).status === Status.OK ) {
+                    await EventModel.create( { type, payload, correlationId, origin } );
+                }
             } catch ( err ) {
                 console.log( `${ service } is not online` );
             }
 
         } );
-
-        await EventModel.create( { type, payload, correlationId, origin } );
 
         res.status( 200 ).json( new JSONResponse( Status.OK, "Event sent", StatusMessage.success ).build() );
 

@@ -11,3 +11,19 @@ export enum Status {
     OK = "OK",
     NOTOK = "NOTOK",
 }
+
+export enum HttpVerbs {
+    GET = "GET",
+    POST = "POST",
+    PATCH = "PATHC",
+    PUT = "PUT",
+    DELETE = "DELETE"
+}
+
+export enum EVENTS {
+    userCreate = "user.create",
+    userDelete = "user.delete",
+    planificationCreate = "planification.create",
+    planificationDelete = "planification.delete"
+
+}
