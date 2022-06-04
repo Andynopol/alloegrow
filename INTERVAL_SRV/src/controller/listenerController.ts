@@ -35,9 +35,7 @@ export const listen = async ( req: Request, res: Response ) => {
 const createPlanification = async ( { ref, data }: { ref: string, data: any; } ) => {
     await MongoController.connect( ref );
     data.plan = await generatePlanForInterval( new Date( data.start ), new Date( data.end ), data.count );
-    console.log( data );
-    const response = await PlanificationModel.create( data );
-    console.log( response );
+    await PlanificationModel.create( data );
 };
 
 const deletePlanification = async ( { ref, _id }: { ref: string, _id: mongoose.ObjectId; } ) => {

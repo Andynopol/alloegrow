@@ -27,7 +27,7 @@ content-type: application/json
 
 {
     "type":"planification.delete",
-    "payload":{"ref":"asdasd", "_id":"62991b57a328ce06a7bb8659"},
+    "payload":{"ref":"asdasd", "_id":"629bc23ab784ac044a4967b8"},
     "correlationId": "asdaasdfgh",
     "origin": "test"
 }
