@@ -18,8 +18,8 @@ class MongoController {
             .catch( ( err ) => console.log( "Database connection down!", err ) );
     }
 
-    dissconnect () {
-        mongoose.connection.close();
+    async dissconnect () {
+        await mongoose.connection.close();
     }
 }
 

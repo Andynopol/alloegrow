@@ -31,3 +31,8 @@ content-type: application/json
     "correlationId": "asdaasdfgh",
     "origin": "test"
 }
+
+###
+
+GET http://localhost:3200/planifications/6293ff13547f37f7e159e932 HTTP/1.1
+Content-Type: application/json

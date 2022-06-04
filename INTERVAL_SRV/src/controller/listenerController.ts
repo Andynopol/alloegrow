@@ -35,11 +35,14 @@ export const listen = async ( req: Request, res: Response ) => {
 const createPlanification = async ( { ref, data }: { ref: string, data: any; } ) => {
     await MongoController.connect( ref );
     data.plan = await generatePlanForInterval( new Date( data.start ), new Date( data.end ), data.count );
+    console.log( data );
     await PlanificationModel.create( data );
+    await MongoController.dissconnect();
 };
 
 const deletePlanification = async ( { ref, _id }: { ref: string, _id: mongoose.ObjectId; } ) => {
     if ( !mongoose.isValidObjectId( _id ) ) throw ( new Error( "Invalid id received!" ) );
     await MongoController.connect( ref );
     await PlanificationModel.findByIdAndDelete( _id );
+    await MongoController.dissconnect();
 };

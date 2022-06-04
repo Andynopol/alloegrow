@@ -7,6 +7,9 @@ import { HEADERS } from '../constants/vars.js';
 
 export const dispatchEvent = async ( req: Request, res: Response ) => {
     const { type, payload, correlationId, origin } = req.body;
+
+    console.log( req.body );
+
     try {
         if ( !type || !payload || !correlationId || !origin ) return res.status( 400 ).json( new JSONResponse( Status.NOTOK, 'Type, payload or correlationId', StatusMessage.invalid ).build() ).end();
 

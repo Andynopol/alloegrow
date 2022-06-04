@@ -7,7 +7,7 @@ import { ResponseConstructor as JSONResponse } from './ResponseService.js';
 
 export const loginUser = async ( req: Request, res: Response ) => {
     const { email, password } = req.body;
-
+    console.log( req.body );
     try {
         if ( !email || !password ) return res.status( 400 ).json( new JSONResponse( Status.NOTOK, 'Email or password', StatusMessage.invalid ).build() ).end();
 
@@ -23,7 +23,7 @@ export const loginUser = async ( req: Request, res: Response ) => {
 
 export const registerUser = async ( req: Request, res: Response ) => {
     const { firstName, lastName, email, password, confirmedPassword } = req.body;
-
+    console.log( req.body );
     try {
         if ( !firstName || !lastName || !email || !password || !confirmedPassword ) return res.status( 400 ).json( new JSONResponse( Status.NOTOK, 'Some fields', StatusMessage.invalid ).build() ).end();
 
@@ -39,7 +39,7 @@ export const registerUser = async ( req: Request, res: Response ) => {
 
 export const deleteUser = async ( req: Request, res: Response ) => {
     const { _id } = req.params;
-
+    console.log( _id );
     try {
         if ( !_id ) return res.status( 400 ).json( new JSONResponse( Status.NOTOK, 'Id', StatusMessage.invalid ).build() ).end();
 

@@ -10,7 +10,6 @@ import { HandlerResult, UserCredientials } from '../constants/interfaces.js';
 
 export const listen = async ( req: Request, res: Response ) => {
     const { origin, type, payload, correlationId } = req.body;
-
     console.log( req.body );
 
     let result: HandlerResult;
