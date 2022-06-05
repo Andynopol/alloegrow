@@ -5,6 +5,7 @@ export enum StatusMessage {
     success = "with success",
     missmatch = "missmatch",
     duplicate = "already exists",
+    expired = "has expired"
 }
 
 export enum Status {

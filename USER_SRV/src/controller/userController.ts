@@ -84,3 +84,24 @@ export const deleteUser = async ( req: Request, res: Response ) => {
         res.status( 500 ).json( new JSONResponse( Status.NOTOK, '', StatusMessage.unknowun, ( err as Error ).message ).build() );
     }
 };
+
+export const authCheck = async ( req: Request, res: Response ) => {
+    const token = req.headers.authorization.split( " " )[ 1 ];
+    try {
+        if ( !token || token === "" ) return res.status( 400 ).json( new JSONResponse( Status.NOTOK, "Token", StatusMessage.invalid ).build() );
+
+        if ( token.length < 500 ) {
+            const decode: any = jwt.verify( token, process.env.SECRET );
+            ( req as any ).userId = decode?.id;
+            return res.status( 200 ).json( new JSONResponse( Status.OK, 'Token was verified', StatusMessage.success, decode?.id ).build() );
+        } else {
+            const decode: any = jwt.decode( token );
+            return res.status( 200 ).json( new JSONResponse( Status.OK, 'Token was verified', StatusMessage.success, decode?.sub ).build() );
+        }
+    } catch ( err ) {
+        if ( ( err as Error ).name = "TokenExpiredError" ) {
+            res.status( 401 ).json( new JSONResponse( Status.NOTOK, "Token", StatusMessage.expired ).build() );
+        }
+        res.status( 500 ).json( new JSONResponse( Status.NOTOK, '', StatusMessage.unknowun, ( err as Error ).message ).build() );
+    }
+};
