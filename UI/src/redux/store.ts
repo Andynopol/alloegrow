@@ -1,8 +1,19 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import { configureStore, ThunkAction, Action, compose } from '@reduxjs/toolkit';
+import authSlice from './slices/authSlice';
+
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+}
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const store = configureStore( {
   reducer: {
+    auth: authSlice
   },
+  enhancers: composeEnhancers
 } );
 
 export type AppDispatch = typeof store.dispatch;

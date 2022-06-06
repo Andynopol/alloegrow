@@ -5,3 +5,8 @@ export enum HTTPVerbs {
     PATCH = "PATCH",
     DELETE = "DELETE"
 }
+
+export enum DialogTypes {
+    login = "Login",
+    register = "Register",
+}
