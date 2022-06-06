@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { MouseEventHandler, MouseEvent } from 'react';
 import { Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Grid, Box, Typography, Container } from '@mui/material';
 
 
@@ -11,6 +11,12 @@ const SignUp: React.FC = () => {
             email: data.get( 'email' ),
             password: data.get( 'password' ),
         } );
+    };
+
+    const handleGoToLoginClick: MouseEventHandler<HTMLElement> = ( event: MouseEvent<HTMLElement> ) => {
+        event.preventDefault();
+        const { target } = event;
+        target?.dispatchEvent( new CustomEvent( 'set-generic-dialog', { detail: { open: true, type: "SignIn" }, cancelable: true, bubbles: true, composed: false } ) );
     };
 
     return (
@@ -88,7 +94,7 @@ const SignUp: React.FC = () => {
                     </Button>
                     <Grid container justifyContent="flex-end">
                         <Grid item>
-                            <Link href="#" variant="body2">
+                            <Link href="#" variant="body2" onClick={ handleGoToLoginClick }>
                                 Already have an account? Sign in
                             </Link>
                         </Grid>

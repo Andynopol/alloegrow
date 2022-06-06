@@ -10,3 +10,8 @@ export enum DialogTypes {
     login = "Login",
     register = "Register",
 }
+
+export enum RequestResponseStatus {
+    OK = "OK",
+    NOTOK = "NOTOK",
+}

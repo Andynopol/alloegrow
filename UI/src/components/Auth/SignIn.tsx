@@ -1,21 +1,40 @@
-import React, { MouseEvent, MouseEventHandler } from 'react';
+import React, { useState, MouseEvent, MouseEventHandler } from 'react';
 import { Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Grid, Box, Typography, Container } from '@mui/material';
+import { useAppDispatch } from '../../redux/hooks';
+import { login } from '../../api/userApi';
+import { setUser } from '../../redux/slices/authSlice';
+import { RequestResponseStatus } from '../../constants/enums';
 
 
 const SignIn: React.FC = () => {
-    const handleSubmit = ( event: React.FormEvent<HTMLFormElement> ) => {
+
+    const [ email, setEmail ] = useState( '' );
+    const [ password, setPassword ] = useState( '' );
+
+    const dispatch = useAppDispatch();
+    const handleSubmit: MouseEventHandler<HTMLButtonElement> = async ( event: MouseEvent<HTMLButtonElement> ) => {
         event.preventDefault();
-        const data = new FormData( event.currentTarget );
-        console.log( {
-            email: data.get( 'email' ),
-            password: data.get( 'password' ),
-        } );
+        const { target } = event;
+        try {
+            const response = await login( { email, password } );
+            if ( response.data?.status === RequestResponseStatus.OK ) dispatch( setUser( response.data.payload ) );
+            target.dispatchEvent( new CustomEvent( 'close-generic-dialog', { cancelable: true, bubbles: true, composed: false } ) );
+        } catch ( err ) {
+            console.log( err );
+        }
+
     };
 
     const handleCancel: MouseEventHandler<HTMLButtonElement> = ( event: MouseEvent<HTMLButtonElement> ) => {
+        event.preventDefault();
         const { target } = event;
-        console.log( target, "dispatching" );
         target?.dispatchEvent( new CustomEvent( 'close-generic-dialog', { cancelable: true, bubbles: true, composed: false } ) );
+    };
+
+    const handleGoToRegisterClick: MouseEventHandler<HTMLElement> = ( event: MouseEvent<HTMLElement> ) => {
+        event.preventDefault();
+        const { target } = event;
+        target?.dispatchEvent( new CustomEvent( 'set-generic-dialog', { detail: { open: true, type: "SignUp" }, cancelable: true, bubbles: true, composed: false } ) );
     };
 
     return (
@@ -32,7 +51,7 @@ const SignIn: React.FC = () => {
                 <Typography component="h1" variant="h5">
                     Sign in
                 </Typography>
-                <Box component="form" onSubmit={ handleSubmit } noValidate sx={ { mt: 1 } }>
+                <Box component="form" noValidate sx={ { mt: 1 } }>
                     <TextField
                         margin="normal"
                         required
@@ -41,6 +60,8 @@ const SignIn: React.FC = () => {
                         label="Email Address"
                         name="email"
                         autoComplete="email"
+                        value={ email }
+                        onChange={ ( ev ) => { setEmail( ev.target.value ); } }
                         autoFocus
                     />
                     <TextField
@@ -51,6 +72,8 @@ const SignIn: React.FC = () => {
                         label="Password"
                         type="password"
                         id="password"
+                        value={ password }
+                        onChange={ ( ev ) => { setPassword( ev.target.value ); } }
                         autoComplete="current-password"
                     />
                     <FormControlLabel
@@ -58,10 +81,10 @@ const SignIn: React.FC = () => {
                         label="Remember me"
                     />
                     <Button
-                        type="submit"
                         fullWidth
                         variant="contained"
                         sx={ { mt: 3, mb: 2 } }
+                        onClick={ handleSubmit }
                     >
                         Sign In
                     </Button>
@@ -80,7 +103,7 @@ const SignIn: React.FC = () => {
                             </Link>
                         </Grid>
                         <Grid item>
-                            <Link href="#" variant="body2">
+                            <Link href="#" variant="body2" onClick={ handleGoToRegisterClick }>
                                 { "Don't have an account? Sign Up" }
                             </Link>
                         </Grid>

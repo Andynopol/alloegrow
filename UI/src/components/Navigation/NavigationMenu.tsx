@@ -1,69 +1,82 @@
-import React from 'react';
-import { Box, SwipeableDrawer, List, Divider, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
-import LoginIcon from '@mui/icons-material/Login';
-import LogoutIcon from '@mui/icons-material/Logout';
-import RegisterIcon from '@mui/icons-material/HowToReg';
+import React, { useRef, useEffect } from 'react';
+import { Box, SwipeableDrawer, List, Divider, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography, IconButton, createTheme } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import { NavMenuData } from '../../constants/interfaces';
+
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
 interface Props {
     open: boolean,
     toggle: Function;
-    anchor: Anchor;
-    data?: any;
+    data: NavMenuData;
 }
 
 const SideMenu: React.FC<Props> = ( props: Props ) => {
-    const { open, toggle, anchor, data } = props;
+    const { open, toggle, data } = props;
+    const anchor = useRef<Anchor>( "left" );
+
+    useEffect( () => {
+        window.addEventListener( 'resize', adaptMenuToWindow );
+        window.addEventListener( 'orientationchange', adaptMenuToWindow );
+        return () => {
+            window.removeEventListener( 'resize', adaptMenuToWindow );
+            window.removeEventListener( 'orientationchange', adaptMenuToWindow );
+        };
+    } );
+
+    const adaptMenuToWindow = () => {
+        if ( window.innerWidth < createTheme().breakpoints.values.md ) {
+            anchor.current = "bottom";
+        } else {
+            anchor.current = "left";
+        }
+    };
 
     const list = ( anchor: Anchor ) => (
         <Box
             sx={ { width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 } }
             role="presentation"
-            onClick={ toggle( false ) }
-            onKeyDown={ toggle( false ) }
+            onClick={ () => toggle( false ) }
+            onTouchEnd={ () => toggle( false ) }
+            onKeyDown={ () => toggle( false ) }
+            key="box"
         >
-            <List>
-                <ListItem key={ "SignIn" } disablePadding>
-                    <ListItemButton>
-                        <ListItemIcon>
-                            <LoginIcon />
-                        </ListItemIcon>
-                        <ListItemText primary={ "Sign In" } />
-                    </ListItemButton>
-                </ListItem>
-                <ListItem key={ "SignUp" } disablePadding>
-                    <ListItemButton>
-                        <ListItemIcon>
-                            <RegisterIcon />
-                        </ListItemIcon>
-                        <ListItemText primary={ "Sign Un" } />
-                    </ListItemButton>
-                </ListItem>
-            </List>
-            <Divider />
-            <List>
-                <ListItem key={ "Logout" } disablePadding>
-                    <ListItemButton>
-                        <ListItemIcon>
-                            <LogoutIcon />
-                        </ListItemIcon>
-                        <ListItemText primary={ "Logout" } />
-                    </ListItemButton>
-                </ListItem>
-            </List>
+            <Box className='menu-title-box'>
+                <Typography className='menu-title' variant='h5'>Menu</Typography>
+                <IconButton onClick={ () => toggle( false ) }>
+                    <CloseIcon />
+                </IconButton>
+            </Box>
+            { data.sections.map( ( section ) => {
+                return ( <><List key={ `section${ Math.floor( Math.random() * 1000 ) }` }>
+                    { section.items.map( item =>
+                        <ListItem key={ `${ item.name }${ Math.floor( Math.random() * 1000 ) }` } disablePadding>
+                            <ListItemButton onClick={ () => item.callback() } onTouchEnd={ () => item.callback() }>
+                                <ListItemIcon>
+                                    { item.icon }
+                                </ListItemIcon>
+                                <ListItemText primary={ item.label } />
+                            </ListItemButton>
+                        </ListItem> )
+                    }
+                </List>
+                    <Divider />
+                </> );
+            } ) }
         </Box>
     );
 
     return (
         <React.Fragment>
             <SwipeableDrawer
-                anchor="left"
+                anchor={ anchor.current }
                 open={ open }
-                onClose={ toggle( false ) }
-                onOpen={ toggle( true ) }
+                onClose={ () => toggle( false ) }
+                onOpen={ () => toggle( true ) }
             >
-                { list( ( anchor ) ) }
+
+                { list( ( anchor.current ) ) }
             </SwipeableDrawer>
         </React.Fragment>
     );

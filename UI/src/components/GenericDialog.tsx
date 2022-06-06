@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { ReactNode, useCallback, useEffect, useRef } from 'react';
+import React, { ReactNode, useCallback } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import Slide, { SlideProps } from '@mui/material/Slide';
@@ -26,10 +26,6 @@ const AuthDialog: React.FC<Props> = ( props: Props ) => {
             node.addEventListener( 'close-generic-dialog', onClose );
             node.addEventListener( 'open-generic-dialog', onOpen );
         }
-        return () => {
-            node.removeEventListener( 'close-generic-dialog', onClose );
-            node.removeEventListener( 'open-generic-dialog', onOpen );
-        };
     }, [] );
 
     return (
