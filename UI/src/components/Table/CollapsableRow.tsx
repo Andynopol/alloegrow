@@ -37,11 +37,12 @@ const CollapsableRow: React.FC<Props> = ( props: Props ) => {
                 <TableCell align="center">{ formatHM( new Date( row.start ) ) }</TableCell>
                 <TableCell align="center">{ formatHM( new Date( row.end ) ) }</TableCell>
                 <TableCell align="center">{ row.count }</TableCell>
+                <TableCell />
             </TableRow>
             <TableRow>
                 <TableCell style={ { paddingBottom: 0, paddingTop: 0 } } colSpan={ 6 }>
                     <Collapse in={ open } timeout="auto" unmountOnExit>
-                        <Box sx={ { margin: 1 } }>
+                        <Box sx={ { margin: 1 } } className="dropdown-table">
                             <Typography variant="h6" gutterBottom style={ { textAlign: "center" } } component="div">
                                 Plan
                             </Typography>

@@ -91,7 +91,8 @@ const SignIn: React.FC = () => {
                     <Button
                         fullWidth
                         variant="contained"
-                        sx={ { mt: 3, mb: 2 } }
+                        color="error"
+                        sx={ { mb: 2 } }
                         onClick={ handleCancel }
                     >
                         Cancel

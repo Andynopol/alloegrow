@@ -19,7 +19,12 @@ const planificationSlice = createSlice( {
         removePlanification: ( state, action: PayloadAction<string> ) => {
             state.data = state.data.filter( ( { _id }: Planification ) => _id !== action.payload );
             return state;
+        },
+        flush: ( state ) => {
+            state = { ...initialState };
+            return state;
         }
+
     },
 } );
 

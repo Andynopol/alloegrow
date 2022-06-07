@@ -13,12 +13,13 @@ const PlanificationGrid: React.FC<Props> = ( props: Props ) => {
     const { metaData, rowData } = props;
 
     return (
-        <TableContainer component={ Paper }>
+        <TableContainer id="main-table" component={ Paper }>
             <Table aria-label="collapsible table">
                 <TableHead>
                     <TableRow>
                         <TableCell />
                         { metaData.map( ( title: string ) => <TableCell align="center" key={ title }>{ title }</TableCell> ) }
+                        <TableCell align='right'>Commands</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>

@@ -28,7 +28,7 @@ const Main = () => {
         <Grid className="main-planification-container" container justifyContent="center" alignItems="center">
             <Grid sm={ false } md={ 2 } item></Grid>
             <Grid sm={ 12 } md={ 8 } className="list-container" item>
-                { planifications && <PlanificationGrid metaData={ DEFAULT_TABLE_HEAD } rowData={ planifications.data } /> }
+                { user && <PlanificationGrid metaData={ DEFAULT_TABLE_HEAD } rowData={ planifications.data } /> }
             </Grid>
             <Grid sm={ false } md={ 2 } item></Grid>
         </Grid>
