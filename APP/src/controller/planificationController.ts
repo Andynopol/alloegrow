@@ -46,3 +46,19 @@ export const deletePlanification = async ( req: Request, res: Response ) => {
         return res.status( 500 ).json( new JSONResponse( Status.NOTOK, 'Handler', StatusMessage.notFound ).build() ).end();
     }
 };
+
+export const getPlanificationForUser = async ( req: Request, res: Response ) => {
+    const { userId } = req.params;
+
+    try {
+        if ( !userId ) return res.status( 400 ).json( new JSONResponse( Status.NOTOK, "User ID", StatusMessage.invalid ) );
+
+        const response = await fetch( `${ process.env.URI_SCHEMA }://${ process.env.PLAN_SRV_URI }${ process.env.PLANIFICATIONS_PATH }/${ userId }` );
+
+        const responseJson = await response.json();
+
+        res.status( response.status ).json( responseJson );
+    } catch ( err ) {
+        return res.status( 500 ).json( new JSONResponse( Status.NOTOK, 'Handler', StatusMessage.notFound ).build() ).end();
+    }
+};

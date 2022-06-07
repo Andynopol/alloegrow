@@ -15,7 +15,7 @@ export const generatePlanForInterval = async ( start: Date, end: Date, count: nu
 
 export const getIntervalsForUser = async ( req: Request, res: Response ) => {
     const { _id } = req.params;
-
+    console.log( _id );
     try {
         if ( !_id ) res.status( 400 ).json( new JSONResponse( Status.NOTOK, 'User ID', StatusMessage.invalid ).build() ).end();
 
@@ -27,7 +27,7 @@ export const getIntervalsForUser = async ( req: Request, res: Response ) => {
 
         console.log( planifications );
 
-        res.status( 200 ).json( new JSONResponse( Status.OK, 'Collection retreived', StatusMessage.success, planifications ).build() );
+        res.status( 200 ).json( new JSONResponse( Status.OK, 'Collection retreived', StatusMessage.success, planifications ).build() ).end();
     }
     catch ( err ) {
         res.status( 500 ).json( new JSONResponse( Status.NOTOK, '', StatusMessage.unknowun, ( err as Error ).message ).build() ).end();

@@ -16,7 +16,7 @@ app.use( express.urlencoded( { limit: '30mb', extended: true } ) );
 app.use( '/usr', userRouter );
 app.use( '/planifications', planificationRouter );
 
-app.get( '*', ( _req: Request, res: Response ) => {
+app.get( '/', ( _req: Request, res: Response ) => {
     res.sendFile( path.join( __dirname, '../public', 'index.html' ) );
 } );
 
