@@ -12,6 +12,9 @@
 
 .navbar-container{
   padding: 4px 8px;
+  position: fixed;
+  top:0;
+  background-color: #fafafa;
 }
 
 .navbar-left{
@@ -24,4 +27,24 @@
   display: flex;
   justify-content: right;
   align-items: center;
+}
+
+.main-planification-container{
+  width: 100%;
+  height: 100%;
+}
+
+#root-container{
+  height: 100vh;
+}
+
+.list-container{
+  padding-top: 50px;
+  width: 100%;
+  height: 100%;
+}
+
+#main-table{
+  cursor: default;
+  user-select: none;
 }

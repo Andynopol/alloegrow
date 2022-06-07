@@ -2,7 +2,7 @@ import React, { useState, MouseEvent, MouseEventHandler } from 'react';
 import { Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Grid, Box, Typography, Container } from '@mui/material';
 import { useAppDispatch } from '../../redux/hooks';
 import { login } from '../../api/userApi';
-import { setUser } from '../../redux/slices/authSlice';
+import { setAuth } from '../../redux/slices/authSlice';
 import { RequestResponseStatus } from '../../constants/enums';
 
 
@@ -17,7 +17,7 @@ const SignIn: React.FC = () => {
         const { target } = event;
         try {
             const response = await login( { email, password } );
-            if ( response.data?.status === RequestResponseStatus.OK ) dispatch( setUser( response.data.payload ) );
+            if ( response.data?.status === RequestResponseStatus.OK ) dispatch( setAuth( response.data.payload ) );
             target.dispatchEvent( new CustomEvent( 'close-generic-dialog', { cancelable: true, bubbles: true, composed: false } ) );
         } catch ( err ) {
             console.log( err );

@@ -1,9 +1,16 @@
 import React, { MouseEventHandler, MouseEvent } from 'react';
-import { Grid, IconButton } from '@mui/material';
+import { Grid, IconButton, Avatar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import { deepPurple } from '@mui/material/colors';
 
 
-const MenuBar: React.FC = () => {
+interface Props {
+    userData?: any;
+}
+
+const MenuBar: React.FC<Props> = ( props: Props ) => {
+
+    const { userData } = props;
 
     const handleMenuButtonClick: MouseEventHandler<HTMLElement> = ( event: MouseEvent<HTMLElement> ) => {
         const { target } = event;
@@ -20,7 +27,9 @@ const MenuBar: React.FC = () => {
                 </Grid>
             </Grid>
             <Grid item xs={ 6 }>
-                <Grid className="navbar-right" container></Grid>
+                <Grid className="navbar-right" container>
+                    { userData && <Avatar src={ userData.img } sx={ { bgcolor: deepPurple[ 500 ] } }>{ userData.lastName[ 0 ] }</Avatar> }
+                </Grid>
             </Grid>
         </Grid>
     );

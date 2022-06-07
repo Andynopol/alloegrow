@@ -25,3 +25,21 @@ export interface NavMenuItem {
 export interface NavMenuData {
     sections: Array<NavMenuSection>;
 }
+
+export interface Planification {
+    _id: string;
+    name: string;
+    date: Date;
+    start: Date;
+    end: Date;
+    count: number;
+    plan: Array<Date>;
+}
+
+export interface PlanificationGenerationData {
+    name: string;
+    date: Date;
+    start: Date;
+    end: Date;
+}
+
