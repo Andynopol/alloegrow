@@ -2,6 +2,8 @@ import express, { urlencoded } from 'express';
 import mongoose from 'mongoose';
 import { config } from 'dotenv';
 import userRouter from './router/userRouter.js';
+import listenerRouter from './router/listenerRouter.js';
+import cors from 'cors';
 
 
 config();
@@ -13,7 +15,8 @@ app.use( urlencoded( { limit: '30mb', extended: true } ) );
 
 //routes
 
-app.use( '/usr', userRouter );
+app.use( '/usr', cors(), userRouter );
+app.use( '/events', listenerRouter );
 
 app.listen( PORT, () => console.log( `listening at port: ${ PORT }` ) );
 

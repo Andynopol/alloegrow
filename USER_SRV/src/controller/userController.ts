@@ -12,6 +12,8 @@ import mongoose from 'mongoose';
 export const loginUser = async ( req: Request, res: Response ) => {
     const { email, password } = req.body;
 
+    console.log( req.body );
+
     try {
         if ( !email || !password ) return res.status( 400 ).json( new JSONResponse( Status.NOTOK, 'Email or password', StatusMessage.invalid ).build() ).end();
 
@@ -35,10 +37,12 @@ export const loginUser = async ( req: Request, res: Response ) => {
 export const registerUser = async ( req: Request, res: Response ) => {
     const { firstName, lastName, email, password, confirmedPassword } = req.body;
 
+    console.log( req.body );
+
     try {
         if ( !firstName || !lastName || !email || !password || !confirmedPassword ) return res.status( 400 ).json( new JSONResponse( Status.NOTOK, 'Some fields', StatusMessage.invalid ).build() ).end();
 
-        if ( password !== confirmedPassword ) return res.status( 400 ).json( new JSONResponse( Status.NOTOK, 'Passowrds', StatusMessage.missmatch ).build() ).end();
+        if ( password !== confirmedPassword ) return res.status( 401 ).json( new JSONResponse( Status.NOTOK, 'Passowrds', StatusMessage.missmatch ).build() ).end();
 
         const existingUser = await UserModel.findOne( { email } );
 
@@ -75,8 +79,29 @@ export const deleteUser = async ( req: Request, res: Response ) => {
 
         if ( !userDeleted ) throw new Error( "Database connection issue!" );
 
-        res.status( 200 ).json( new JSONResponse( Status.OK, "User deleted", StatusMessage.success ) ).end();
+        res.status( 200 ).json( new JSONResponse( Status.OK, "User deleted", StatusMessage.success ).build() ).end();
     } catch ( err ) {
+        res.status( 500 ).json( new JSONResponse( Status.NOTOK, '', StatusMessage.unknowun, ( err as Error ).message ).build() );
+    }
+};
+
+export const authCheck = async ( req: Request, res: Response ) => {
+    const token = req.headers.authorization.split( " " )[ 1 ];
+    try {
+        if ( !token || token === "" ) return res.status( 400 ).json( new JSONResponse( Status.NOTOK, "Token", StatusMessage.invalid ).build() );
+
+        if ( token.length < 500 ) {
+            const decode: any = jwt.verify( token, process.env.SECRET );
+            ( req as any ).userId = decode?.id;
+            return res.status( 200 ).json( new JSONResponse( Status.OK, 'Token was verified', StatusMessage.success, decode?.id ).build() );
+        } else {
+            const decode: any = jwt.decode( token );
+            return res.status( 200 ).json( new JSONResponse( Status.OK, 'Token was verified', StatusMessage.success, decode?.sub ).build() );
+        }
+    } catch ( err ) {
+        if ( ( err as Error ).name = "TokenExpiredError" ) {
+            res.status( 401 ).json( new JSONResponse( Status.NOTOK, "Token", StatusMessage.expired ).build() );
+        }
         res.status( 500 ).json( new JSONResponse( Status.NOTOK, '', StatusMessage.unknowun, ( err as Error ).message ).build() );
     }
 };

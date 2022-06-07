@@ -11,7 +11,7 @@ content-type: application/json
 
 ###
 
-# REGISTER
+#  SYNC REGISTER
 POST http://localhost:3100/usr/register HTTP/1.1
 content-type: application/json
 
@@ -25,6 +25,42 @@ content-type: application/json
 
 ###
 
-# DELETE USER
+# SYNC DELETE USER
 DELETE http://localhost:3100/usr/delete/6294023007cf2e4bf9aa0cbe HTTP/1.1
 content-type: application/json
+
+
+###
+
+#ASYNC REGISTER
+
+POST http://localhost:3100/events/listeners HTTP/1.1
+content-type: application/json
+
+{   
+    "type":"user.create",
+    "origin": "local",
+    "payload":{
+        "firstName": "Dinu-Andrei",
+        "lastName": "Nechita",
+        "email":"andrei.nechita22295@gmail.com",
+        "password":"1234",
+        "confirmedPassword":"1234"
+    },
+    "correlationId":"test"
+}
+
+
+###
+
+#ASYNC REGISTER
+
+POST http://localhost:3100/events/listeners HTTP/1.1
+content-type: application/json
+
+{   
+    "type":"user.delete",
+    "origin": "local",
+    "payload":"629a160b464829361fec65b6",
+    "correlationId":"delete-test"
+}

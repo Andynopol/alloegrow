@@ -13,6 +13,6 @@ export class ResponseConstructor {
     }
 
     public build () {
-        return { status: this.status, message: `${ this.prefix } ${ this.statusMsg }`.trim(), payload: this.payload };
+        return { origin: process.env.ORIGIN, status: this.status, message: `${ this.prefix } ${ this.statusMsg }`.trim(), payload: this.payload };
     }
 }

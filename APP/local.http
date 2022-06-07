@@ -1,0 +1,48 @@
+# LOGIN
+POST http://localhost:3005/usr/login HTTP/1.1
+content-type: application/json
+
+{
+    "email":"andrei.nechita95@gmail.com",
+    "password":"1234"
+}
+
+###
+
+#REGISTER
+POST http://localhost:3005/usr/register HTTP/1.1
+content-type: application/json
+
+{   
+    "firstName": "Dinu-Andrei",
+    "lastName": "Nechita",
+    "email":"andrei.nechitaw95@gmail.com",
+    "password":"1234",
+    "confirmedPassword":"1234"
+}
+
+###
+
+#DELETE USER
+DELETE http://localhost:3005/usr/delete/629b3db621945f60b483c30d HTTP/1.1
+Content-Type: application/json
+
+###
+
+POST http://localhost:3005/planifications/create HTTP/1.1
+Content-Type: application/json
+
+{
+    "ref":"6293ff13547f37f7e159e932",
+    "start": 1654322400000,
+    "end": 1654354800000,
+    "count":50,
+    "date": 1654322400000,
+    "name":"test"
+}
+
+###
+
+# GET PLANIFICATION FOR USER
+GET http://localhost:3005/planifications/get/6293ff13547f37f7e159e932 HTTP/1.1
+Content-Type: application/json

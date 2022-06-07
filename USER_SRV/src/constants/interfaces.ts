@@ -4,5 +4,18 @@ export interface UserData extends Document {
     firstName: string,
     lastName: string;
     password: string;
-    planifications?: Array<Date>;
+    planification?: Array<string>;
+}
+
+export interface UserCredientials {
+    email: string,
+    firstName?: string,
+    lastName?: string,
+    password?: string,
+    confirmedPassword?: string;
+}
+
+export interface HandlerResult {
+    status: number;
+    response: any;
 }

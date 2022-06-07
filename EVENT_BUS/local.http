@@ -1,0 +1,69 @@
+# EVENT_BUS API TEST
+
+# CREATE PLANIFICATION
+POST http://localhost:3300/events/dispatch HTTP/1.1
+content-type: application/json
+
+{
+    "type":"planification.create",
+    "payload":{"ref":"asdasd", "data":{
+        "start": "1654201399212",
+        "end": "1654201424990",
+        "count":3,
+        "date": "1654199829960",
+        "plan":["9:04", "10:15", "20:02"],
+        "name":"test"
+        
+    }},
+    "correlationId": "asdaasdfgh",
+    "origin": "test"
+}
+
+###
+
+
+# DELETE PLANIFICATION
+POST http://localhost:3200/events/dispatch HTTP/1.1
+content-type: application/json
+
+{
+    "type":"planification.delete",
+    "payload":{"ref":"asdasd", "_id":"62991b57a328ce06a7bb8659"},
+    "correlationId": "asdaasdfgh",
+    "origin": "test"
+}
+
+###
+
+#ASYNC REGISTER
+
+POST http://localhost:3300/events/dispatch HTTP/1.1
+content-type: application/json
+
+{   
+    "type":"user.create",
+    "origin": "local",
+    "payload":{
+        "firstName": "Dinu-Andrei",
+        "lastName": "Nechita",
+        "email":"andrei.nechita22295@gmail.com",
+        "password":"1234",
+        "confirmedPassword":"1234"
+    },
+    "correlationId":"test"
+}
+
+
+###
+
+#ASYNC DELETE
+
+POST http://localhost:3300/events/dispatch HTTP/1.1
+content-type: application/json
+
+{   
+    "type":"user.delete",
+    "origin": "local",
+    "payload":"629a18ed464829361fec65bb",
+    "correlationId":"delete-test"
+}
