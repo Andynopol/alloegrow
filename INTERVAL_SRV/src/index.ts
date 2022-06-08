@@ -1,6 +1,5 @@
 import express, { urlencoded } from 'express';
 import { config } from 'dotenv';
-import MongoController from './controller/MongoController.js';
 import listenerRouter from './router/listenerRouter.js';
 import intervalsController from './router/intervalsRouter.js';
 
@@ -17,5 +16,3 @@ app.use( '/planifications', intervalsController );
 app.use( '/events', listenerRouter );
 
 app.listen( PORT, () => console.log( `listening at port: ${ PORT }` ) );
-
-MongoController.init( process.env.MONGO_URL, process.env.MONGO_USER, process.env.MONGO_PASS );

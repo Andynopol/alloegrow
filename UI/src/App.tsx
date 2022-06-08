@@ -10,13 +10,14 @@ import NavigationMenu from './components/Navigation/NavigationMenu';
 import SignUp from './components/Auth/SignUp';
 import MenuBar from './components/Navigation/MenuBar';
 import Main from './components/Main';
+import AddPlanificationForm from './components/AddPlanificationForm';
 import { DropdownMenuItem, NavMenuData } from './constants/interfaces';
 import { useAppSelector } from './redux/hooks';
 import { Menu, MenuItem } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { logout, setAuth } from './redux/slices/authSlice';
-
 import { login } from './api/userApi';
+
 
 const App: React.FC = () => {
 
@@ -130,6 +131,7 @@ const App: React.FC = () => {
   const updateDialogState = ( event: any ) => {
     event.preventDefault();
     setDialogState( { ...dialogState, ...event.detail } );
+    console.log( { ...dialogState, ...event.detail } );
   };
 
   const toggleNavigationMenu = ( open: boolean ) => {
@@ -153,10 +155,11 @@ const App: React.FC = () => {
     <div id="root-container">
       <MenuBar userData={ user } />
       <NavigationMenu data={ generateMenuData() } open={ isNavigationMenuOpen } toggle={ toggleNavigationMenu } />
-      { !user && <GenericDialog open={ dialogState.open } onOpen={ openLoginDialog } onClose={ closeLoginDialog }>
+      <GenericDialog open={ dialogState.open } onOpen={ openLoginDialog } onClose={ closeLoginDialog }>
         { dialogState.type === "SignIn" && <SignIn /> }
         { dialogState.type === "SignUp" && <SignUp /> }
-      </GenericDialog> }
+        { dialogState.type === "AddPlanification" && <AddPlanificationForm /> }
+      </GenericDialog>
       <Main />
 
       <Menu

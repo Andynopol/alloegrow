@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import { Status, StatusMessage } from '../constants/enums.js';
 import { ResponseConstructor as JSONResponse } from './ResponseService.js';
 import PlanificationModel from '../model/PlanificationModel.js';
-import MongoController from './MongoController.js';
 import mongoose from 'mongoose';
 import { generatePlanForInterval } from './intervalsControllers.js';
 
@@ -33,18 +32,20 @@ export const listen = async ( req: Request, res: Response ) => {
 };
 
 const createPlanification = async ( { ref, data }: { ref: string, data: any; } ) => {
-    await MongoController.connect( ref );
+    console.log( ref, data );
+    mongoose.connect( process.env.MONGO_URL, { user: process.env.MONGO_USER, pass: process.env.MONGO_PASS, dbName: ref } )
+        .then( () => console.log( `Connected to ${ ref }` ) )
+        .catch( () => console.log( `Connection failed!` ) );
     data.plan = await generatePlanForInterval( new Date( data.start ), new Date( data.end ), data.count );
     console.log( data );
     await PlanificationModel.create( data );
-    await MongoController.dissconnect();
 };
 
 const deletePlanification = async ( { ref, data }: { ref: string, data: string; } ) => {
     console.log( ref, data );
     if ( !mongoose.isValidObjectId( data ) ) throw ( new Error( "Invalid id received!" ) );
-    await MongoController.connect( ref );
-    console.log( ref, data );
+    mongoose.connect( process.env.MONGO_URL, { user: process.env.MONGO_USER, pass: process.env.MONGO_PASS, dbName: ref } )
+        .then( () => console.log( `Connected to ${ ref }` ) )
+        .catch( () => console.log( `Connection failed!` ) );
     await PlanificationModel.findByIdAndDelete( data );
-    await MongoController.dissconnect();
 };

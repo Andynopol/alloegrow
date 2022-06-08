@@ -51,7 +51,7 @@ const CollapsableRow: React.FC<Props> = ( props: Props ) => {
                 <TableCell align="center"><IconButton onClick={ handleCommandsButtonClick }><MoreHorizIcon /></IconButton></TableCell>
             </TableRow>
             <TableRow>
-                <TableCell style={ { paddingBottom: 0, paddingTop: 0 } } colSpan={ 6 }>
+                <TableCell style={ { paddingBottom: 0, paddingTop: 0 } } colSpan={ 7 }>
                     <Collapse in={ open } timeout="auto" unmountOnExit>
                         <Box sx={ { margin: 1 } } className="dropdown-table">
                             <Typography variant="h6" gutterBottom style={ { textAlign: "center" } } component="div">

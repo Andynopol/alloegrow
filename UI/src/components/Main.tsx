@@ -40,12 +40,15 @@ const Main = () => {
     const handleAddPlanification = async ( event: CustomEvent | any ) => {
         const { detail } = event;
         try {
-            const response = await generatePlanification( detail );
+            const response = await generatePlanification( { ...detail, ref: ( user as any )._id } );
             if ( response.data.message === RequestResponseStatus.OK ) {
                 dispatch( setPlanification( response.data.payload ) );
             }
         } catch ( err ) {
             console.log( err );
+        } finally {
+            window.dispatchEvent( new CustomEvent( 'set-generic-dialog', { detail: { open: false, type: '' } } ) );
+            fetchPlanifications( ( user as any )._id );
         }
     };
 

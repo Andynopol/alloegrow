@@ -9,3 +9,9 @@ export const DEFAULT_TABLE_HEAD = [
     'End Time',
     'Count',
 ];
+
+export const getDateToMidnight = () => {
+    const date = new Date();
+    date.setHours( 0, 0, 0, 0 );
+    return date;
+}; 

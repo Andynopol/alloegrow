@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { Status, StatusMessage } from "../constants/enums.js";
 import { ResponseConstructor as JSONResponse } from "./ResponseService.js";
-import MongoController from "./MongoController.js";
+import mongoose from 'mongoose';
 import PlanificationModel from '../model/PlanificationModel.js';
 
 export const generatePlanForInterval = async ( start: Date, end: Date, count: number = 50 ) => {
@@ -19,7 +19,9 @@ export const getIntervalsForUser = async ( req: Request, res: Response ) => {
     try {
         if ( !_id ) res.status( 400 ).json( new JSONResponse( Status.NOTOK, 'User ID', StatusMessage.invalid ).build() ).end();
 
-        await MongoController.connect( _id );
+        mongoose.connect( process.env.MONGO_URL, { user: process.env.MONGO_USER, pass: process.env.MONGO_PASS, dbName: _id } )
+            .then( () => console.log( `Connected to ${ _id }` ) )
+            .catch( () => console.log( `Connection failed!` ) );
 
         const planifications = await PlanificationModel.find( {} );
 

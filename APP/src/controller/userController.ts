@@ -11,7 +11,11 @@ export const loginUser = async ( req: Request, res: Response ) => {
     try {
         if ( !email || !password ) return res.status( 400 ).json( new JSONResponse( Status.NOTOK, 'Email or password', StatusMessage.invalid ).build() ).end();
 
+        console.log( `${ process.env.URI_SCHEMA }://${ process.env.USER_SRV_URI }${ process.env.USER_SRV_LOGIN_PATH }` );
+
         const loginResponse = await fetch( `${ process.env.URI_SCHEMA }://${ process.env.USER_SRV_URI }${ process.env.USER_SRV_LOGIN_PATH }`, { headers: HEADERS, method: HttpVerbs.POST, body: JSON.stringify( { email, password } ) } );
+
+        console.log( loginResponse );
 
         const loginResponseJson = await loginResponse.json();
 
