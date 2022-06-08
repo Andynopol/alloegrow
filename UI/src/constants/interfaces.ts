@@ -43,3 +43,8 @@ export interface PlanificationGenerationData {
     end: Date;
 }
 
+export interface DropdownMenuItem {
+    name: string;
+    _id: string;
+    click: Function;
+}

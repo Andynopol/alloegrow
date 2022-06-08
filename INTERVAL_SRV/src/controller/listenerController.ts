@@ -40,9 +40,11 @@ const createPlanification = async ( { ref, data }: { ref: string, data: any; } )
     await MongoController.dissconnect();
 };
 
-const deletePlanification = async ( { ref, _id }: { ref: string, _id: mongoose.ObjectId; } ) => {
-    if ( !mongoose.isValidObjectId( _id ) ) throw ( new Error( "Invalid id received!" ) );
+const deletePlanification = async ( { ref, data }: { ref: string, data: string; } ) => {
+    console.log( ref, data );
+    if ( !mongoose.isValidObjectId( data ) ) throw ( new Error( "Invalid id received!" ) );
     await MongoController.connect( ref );
-    await PlanificationModel.findByIdAndDelete( _id );
+    console.log( ref, data );
+    await PlanificationModel.findByIdAndDelete( data );
     await MongoController.dissconnect();
 };

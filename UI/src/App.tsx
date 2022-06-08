@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import decode from 'jwt-decode';
 import './App.css';
 import SignIn from './components/Auth/SignIn';
@@ -10,9 +10,9 @@ import NavigationMenu from './components/Navigation/NavigationMenu';
 import SignUp from './components/Auth/SignUp';
 import MenuBar from './components/Navigation/MenuBar';
 import Main from './components/Main';
-import { NavMenuData } from './constants/interfaces';
+import { DropdownMenuItem, NavMenuData } from './constants/interfaces';
 import { useAppSelector } from './redux/hooks';
-
+import { Menu, MenuItem } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { logout, setAuth } from './redux/slices/authSlice';
 
@@ -22,6 +22,9 @@ const App: React.FC = () => {
 
   const [ dialogState, setDialogState ] = useState( { open: false, type: "SignIn" } );
   const [ isNavigationMenuOpen, setIsNavigationMenuOpen ] = useState( false );
+  const [ dropdownMenuAnchor, setDropdownMenuAnchor ] = useState( null );
+  const menuItems = useRef<Array<DropdownMenuItem>>( [] );
+  const open = Boolean( dropdownMenuAnchor );
   const user = useAppSelector( state => state.auth?.user );
   const dispatch = useDispatch();
 
@@ -37,12 +40,16 @@ const App: React.FC = () => {
     window.addEventListener( 'set-generic-dialog', updateDialogState );
     window.addEventListener( 'toggle-slide-menu', updateNavigationMenuState );
     window.addEventListener( 'login-user', handleLogin );
+    window.addEventListener( 'dropdown-menu-close', handleMenuClose );
+    window.addEventListener( 'dropdown-menu-open', handleMenuOpen );
   };
 
   const unlinkEvents = () => {
     window.removeEventListener( 'set-generic-dialog', updateDialogState );
     window.removeEventListener( 'toggle-slide-menu', updateNavigationMenuState );
     window.removeEventListener( 'login-user', handleLogin );
+    window.removeEventListener( 'dropdown-menu-close', handleMenuClose );
+    window.removeEventListener( 'dropdown-menu-open', handleMenuOpen );
   };
 
   const handleSession = () => {
@@ -129,6 +136,18 @@ const App: React.FC = () => {
     setIsNavigationMenuOpen( open );
   };
 
+  const handleMenuClose = () => {
+    setDropdownMenuAnchor( null );
+  };
+
+  const handleMenuOpen = ( event: CustomEvent | any ) => {
+    event.preventDefault();
+    const { detail } = event;
+
+    menuItems.current = detail.items;
+    setDropdownMenuAnchor( detail.currentTarget );
+  };
+
 
   return (
     <div id="root-container">
@@ -139,6 +158,22 @@ const App: React.FC = () => {
         { dialogState.type === "SignUp" && <SignUp /> }
       </GenericDialog> }
       <Main />
+
+      <Menu
+        id="basic-menu"
+        anchorEl={ dropdownMenuAnchor }
+        open={ open }
+        onClose={ handleMenuClose }
+        MenuListProps={ {
+          'aria-labelledby': 'basic-button',
+        } }
+      >
+        {
+          menuItems.current.map( ( item: DropdownMenuItem ) => (
+            <MenuItem key={ item._id } onClick={ () => item.click() }>{ item.name }</MenuItem>
+          ) )
+        }
+      </Menu>
     </div>
   );
 };

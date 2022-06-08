@@ -33,13 +33,13 @@ export const deletePlanification = async ( req: Request, res: Response ) => {
     const { ref } = req.body;
     const { _id } = req.params;
 
-    console.log( req.body );
+    console.log( ref );
     console.log( _id );
 
     try {
-        if ( !ref || !_id ) return res.status( 400 ).json( new JSONResponse( Status.NOTOK, "ref/_id", StatusMessage.invalid ) );
+        if ( !ref || !_id ) return res.status( 400 ).json( new JSONResponse( Status.NOTOK, "ref/_id", StatusMessage.invalid ).build() );
 
-        const createPlanificationResponse = await fetch( `${ process.env.URI_SCHEMA }://${ process.env.EVENT_BUS_URI }${ process.env.EVENT_BUS_DISPATCH_PATH }`, { headers: HEADERS, method: HttpVerbs.POST, body: JSON.stringify( new EventBuilder( process.env.ORIGIN, EVENTS.planificationDelete, ref, uuidv4() ).buildWithRef( ref ) ) } );
+        const createPlanificationResponse = await fetch( `${ process.env.URI_SCHEMA }://${ process.env.EVENT_BUS_URI }${ process.env.EVENT_BUS_DISPATCH_PATH }`, { headers: HEADERS, method: HttpVerbs.POST, body: JSON.stringify( new EventBuilder( process.env.ORIGIN, EVENTS.planificationDelete, _id, uuidv4() ).buildWithRef( ref ) ) } );
 
         res.status( createPlanificationResponse.status ).json( await createPlanificationResponse.json() );
     } catch ( err ) {
