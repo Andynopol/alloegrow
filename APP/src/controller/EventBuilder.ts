@@ -18,4 +18,3 @@ export class EventBuilder {
         return { origin: this.origin, type: this.type, payload: { ref, data: this.payload }, correlationId: this.correlationId };
     }
 }
-}

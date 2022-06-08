@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import { IconButton, TableCell, TableRow, Collapse, Box, Table, TableBody, TableHead, Typography } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { Planification } from '../../constants/interfaces';
+
 
 
 interface Props {
@@ -15,6 +17,15 @@ const CollapsableRow: React.FC<Props> = ( props: Props ) => {
 
     const formatHM: ( timestamp: Date ) => string = ( timestamp: Date ) => {
         return `${ Number( timestamp.getHours() ) < 10 ? 0 : '' }${ timestamp.getHours() }:${ Number( timestamp.getMinutes() ) < 10 ? 0 : '' }${ timestamp.getMinutes() }`;
+    };
+
+    const handleDeletePlanification = ( target: HTMLButtonElement ) => {
+        target.dispatchEvent( new CustomEvent( 'delete-planification', { detail: row._id, bubbles: true, cancelable: true } ) );
+    };
+
+    const handleCommandsButtonClick = ( event: MouseEvent<HTMLButtonElement> ) => {
+        const { currentTarget } = event;
+        currentTarget.dispatchEvent( new CustomEvent( 'dropdown-menu-open', { detail: { currentTarget, items: [ { _id: row._id, name: 'Delete', click: () => handleDeletePlanification( currentTarget ) } ] }, bubbles: true, cancelable: true } ) );
     };
 
 
@@ -37,7 +48,7 @@ const CollapsableRow: React.FC<Props> = ( props: Props ) => {
                 <TableCell align="center">{ formatHM( new Date( row.start ) ) }</TableCell>
                 <TableCell align="center">{ formatHM( new Date( row.end ) ) }</TableCell>
                 <TableCell align="center">{ row.count }</TableCell>
-                <TableCell />
+                <TableCell align="center"><IconButton onClick={ handleCommandsButtonClick }><MoreHorizIcon /></IconButton></TableCell>
             </TableRow>
             <TableRow>
                 <TableCell style={ { paddingBottom: 0, paddingTop: 0 } } colSpan={ 6 }>
