@@ -1,5 +1,9 @@
 {
   "dependencies": {
-    "@mui/x-date-pickers": "^5.0.0-alpha.5"
+    "@mui/x-date-pickers": "^5.0.0-alpha.5",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.12"
   }
 }
