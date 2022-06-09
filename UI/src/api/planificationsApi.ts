@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { PlanificationGenerationData } from '../constants/interfaces';
 
-const API = axios.create( { baseURL: 'http://localhost:3000' } );
+const API = axios.create( { baseURL: 'http://localhost:3005' } );
 
 API.interceptors.request.use( ( req: any ) => {
     if ( localStorage.getItem( 'auth' ) ) {
