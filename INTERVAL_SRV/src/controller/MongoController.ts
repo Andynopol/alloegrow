@@ -11,11 +11,15 @@ class MongoController {
         this.pass = pass;
     }
 
-    async connect ( dbName: string ) {
+    async connect ( dbName?: string ) {
         const { url, user, pass } = this;
         mongoose.connect( url, { user, pass, dbName } )
             .then( () => console.log( "Database connection is up. We are online!" ) )
             .catch( ( err ) => console.log( "Database connection down!", err ) );
+    }
+
+    async useDb ( dbName: string ) {
+        mongoose.connection.useDb( dbName );
     }
 
     async dissconnect () {

@@ -10,7 +10,7 @@ export const createPlanification = async ( req: Request, res: Response ) => {
     const { start, end, count, date, name, ref } = req.body;
     console.log( req.body );
     try {
-        if ( !start || !end || !count || !date || !ref ) return res.status( 400 ).json( new JSONResponse( Status.NOTOK, "start-time/end-time/count/date/ref", StatusMessage.invalid ) );
+        if ( !start || !end || !count || !date || !ref ) return res.status( 400 ).json( new JSONResponse( Status.NOTOK, "start-time/end-time/count/date/ref", StatusMessage.invalid ).build() );
 
         const createPlanificationResponse = await fetch( `${ process.env.URI_SCHEMA }://${ process.env.EVENT_BUS_URI }${ process.env.EVENT_BUS_DISPATCH_PATH }`, {
             headers: HEADERS,
