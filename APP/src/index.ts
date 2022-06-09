@@ -4,6 +4,7 @@ import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import userRouter from './router/userRouter.js';
 import planificationRouter from './router/planificationRouter.js';
+import cors from 'cors';
 
 config();
 const PORT = process.env.PORT || 3005;
@@ -13,6 +14,7 @@ app.use( express.json( { limit: '1mb' } ) );
 app.use( express.urlencoded( { limit: '30mb', extended: true } ) );
 app.use( '/usr', userRouter );
 app.use( '/planifications', planificationRouter );
+app.use( cors() );
 
 
 app.get( '/', ( _req: Request, res: Response ) => {
