@@ -7,6 +7,6 @@ COPY package.json ./
 RUN npm i --only=prod
 
 COPY ./dist/ ./dist/
-COPY .env_sample .env
+COPY .env_live .env
 
 CMD ["npm", "run", "start"]

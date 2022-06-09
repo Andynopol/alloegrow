@@ -8,6 +8,6 @@ RUN npm i --only=prod
 
 COPY ./public/ ./public/
 COPY ./dist/ ./dist/
-COPY .env_sample .env
+COPY .env_live .env
 
 CMD ["npm", "run", "start"]
