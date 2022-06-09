@@ -1,9 +1,8 @@
 import { Router } from "express";
 import { listen } from "../controller/listenerController.js";
-import cors from 'cors';
 
 const router = Router();
 
-router.post( '/listeners', cors(), listen );
+router.post( '/listeners', listen );
 
 export default router;
