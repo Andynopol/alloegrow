@@ -3,7 +3,6 @@ import mongoose from 'mongoose';
 import { config } from 'dotenv';
 import userRouter from './router/userRouter.js';
 import listenerRouter from './router/listenerRouter.js';
-import path from 'path';
 
 
 config();
