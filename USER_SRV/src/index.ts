@@ -18,8 +18,6 @@ app.use( urlencoded( { limit: '30mb', extended: true } ) );
 app.use( '/usr', userRouter );
 app.use( '/events', listenerRouter );
 
-app.use( `/`, express.static( path.join( __dirname, `../pubilc` ) ) );
-
 app.listen( PORT, () => console.log( `listening at port: ${ PORT }` ) );
 
 mongoose.connect( process.env.MONGO_URL, { user: process.env.MONGO_USER, pass: process.env.MONGO_PASS, dbName: process.env.MONGO_DBNAME } )
