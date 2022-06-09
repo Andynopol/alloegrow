@@ -6,7 +6,7 @@ WORKDIR /app
 COPY package.json ./
 RUN npm i --only=prod
 
-COPY ./public/ ./public/
+COPY ./client/ ./client/
 COPY ./dist/ ./dist/
 COPY .env_live .env
 
