@@ -6,6 +6,7 @@ WORKDIR /app
 COPY package.json ./
 RUN npm i --only=prod
 
+COPY ./public/ ./public/
 COPY ./dist/ ./dist/
 COPY .env_sample .env
 
