@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import { config } from 'dotenv';
 import userRouter from './router/userRouter.js';
 import listenerRouter from './router/listenerRouter.js';
+import path from 'path';
 
 
 config();
@@ -16,6 +17,8 @@ app.use( urlencoded( { limit: '30mb', extended: true } ) );
 
 app.use( '/usr', userRouter );
 app.use( '/events', listenerRouter );
+
+app.use( `/`, express.static( path.join( __dirname, `../pubilc` ) ) );
 
 app.listen( PORT, () => console.log( `listening at port: ${ PORT }` ) );
 
